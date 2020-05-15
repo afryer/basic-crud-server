@@ -7,10 +7,17 @@ import cors from "cors";
 import Template from "./../template";
 import userRoutes from "./routes/user.routes";
 import authRoutes from "./routes/auth.routes";
+// only during dev otherwise comment out
+import devBundle from "./devBundle";
+import path from "path";
 
+const CURRENT_WORKING_DIR = process.cwd();
 const app = express();
+// only during dev otherwise comment out
+devBundle.compile(app);
 
 /*... configure express ... */
+app.use("/dist", express.static(path.join(CURRENT_WORKING_DIR, "dist")));
 
 // parse body params and attach them to req.body
 app.use(bodyParser.json());
